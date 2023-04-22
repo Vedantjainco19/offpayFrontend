@@ -1,11 +1,12 @@
 import React from 'react';
+import {Text } from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 
 import HomeScreen from '../screens/HomeScreen';
 import CartScreen from '../screens/CartScreen';
-import FavoriteScreen from '../screens/FavoriteScreen';
+import BankDetails from '../screens/FavoriteScreen';
 import GameDetailsScreen from '../screens/GameDetailsScreen';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -39,9 +40,9 @@ const TabNavigator = () => {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: {backgroundColor: '#AD40AF'},
+        tabBarStyle: {backgroundColor: '#0066cc'},
         tabBarInactiveTintColor: '#fff',
-        tabBarActiveTintColor: 'yellow',
+        tabBarActiveTintColor: 'aqua',
       }}>
       <Tab.Screen
         name="Home2"
@@ -49,10 +50,10 @@ const TabNavigator = () => {
         options={({route}) => ({
           tabBarStyle: {
             display: getTabBarVisibility(route),
-            backgroundColor: '#AD40AF',
+            backgroundColor: '#0066cc',
           },
           tabBarIcon: ({color, size}) => (
-            <Ionicons name="home-outline" color={color} size={size} />
+            <Text style={{color:color}}>Tokens</Text>
           ),
         })}
       />
@@ -60,19 +61,17 @@ const TabNavigator = () => {
         name="Cart"
         component={CartScreen}
         options={{
-          tabBarBadge: 3,
-          tabBarBadgeStyle: {backgroundColor: 'yellow'},
           tabBarIcon: ({color, size}) => (
-            <Feather name="shopping-bag" color={color} size={size} />
+            <Text style={{color: color}}>Recieve Money</Text>
           ),
         }}
       />
       <Tab.Screen
         name="Favorite"
-        component={FavoriteScreen}
+        component={BankDetails}
         options={{
           tabBarIcon: ({color, size}) => (
-            <Ionicons name="heart-outline" color={color} size={size} />
+            <Text style={{color: color}}>Bank Details</Text>
           ),
         }}
       />
@@ -85,7 +84,7 @@ const getTabBarVisibility = route => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? 'Feed';
   // console.log(routeName);
 
-  if( routeName == 'GameDetails' ) {
+  if (routeName == 'GameDetails') {
     return 'none';
   }
   return 'flex';

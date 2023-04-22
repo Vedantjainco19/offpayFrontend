@@ -21,7 +21,7 @@ export default function CustomSwitch({
         width: '100%',
         backgroundColor: '#e4e4e4',
         borderRadius: 10,
-        borderColor: '#AD40AF',
+        borderColor: '#0066cc',
         flexDirection: 'row',
         justifyContent: 'center',
       }}>
@@ -30,14 +30,14 @@ export default function CustomSwitch({
         onPress={() => updateSwitchData(1)}
         style={{
           flex: 1,
-          backgroundColor: getSelectionMode == 1 ? '#AD40AF' : '#e4e4e4',
+          backgroundColor: getSelectionMode == 1 ? '#0066cc' : '#e4e4e4',
           borderRadius: 10,
           justifyContent: 'center',
           alignItems: 'center',
         }}>
         <Text
           style={{
-            color: getSelectionMode == 1 ? 'white' : '#AD40AF',
+            color: getSelectionMode == 1 ? 'white' : '#0066cc',
             fontSize: 14,
             fontFamily: 'Roboto-Medium',
           }}>
@@ -49,14 +49,14 @@ export default function CustomSwitch({
         onPress={() => updateSwitchData(2)}
         style={{
           flex: 1,
-          backgroundColor: getSelectionMode == 2 ? '#AD40AF' : '#e4e4e4',
+          backgroundColor: getSelectionMode == 2 ? '#0066cc' : '#e4e4e4',
           borderRadius: 10,
           justifyContent: 'center',
           alignItems: 'center',
         }}>
         <Text
           style={{
-            color: getSelectionMode == 2 ? 'white' : '#AD40AF',
+            color: getSelectionMode == 2 ? 'white' : '#0066cc',
             fontSize: 14,
             fontFamily: 'Roboto-Medium',
           }}>

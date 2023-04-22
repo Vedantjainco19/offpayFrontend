@@ -16,10 +16,11 @@ import {windowWidth} from '../utils/Dimensions';
 import {freeGames, paidGames, sliderData} from '../model/data';
 import CustomSwitch from '../components/CustomSwitch';
 import ListItem from '../components/ListItem';
+import{ AuthContext } from '../components/context';
 
 export default function HomeScreen({navigation}) {
   const [gamesTab, setGamesTab] = useState(1);
-
+  const { signOut, toggleTheme } = React.useContext(AuthContext);
   const renderBanner = ({item, index}) => {
     return <BannerSlider data={item} />;
   };
@@ -38,33 +39,11 @@ export default function HomeScreen({navigation}) {
             marginBottom: 20,
           }}>
           <Text style={{fontSize: 18, fontFamily: 'Roboto-Medium'}}>
-            Hello John Doe
-          </Text>
-          <TouchableOpacity onPress={() => navigation.openDrawer()}>
-            <ImageBackground
-              source={require('../assets/images/user-profile.jpg')}
-              style={{width: 35, height: 35}}
-              imageStyle={{borderRadius: 25}}
-            />
-          </TouchableOpacity>
-        </View>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            borderColor: '#C6C6C6',
-            borderWidth: 1,
-            borderRadius: 8,
-            paddingHorizontal: 10,
-            paddingVertical: 8,
-          }}>
-          <Feather
-            name="search"
-            size={20}
-            color="#C6C6C6"
-            style={{marginRight: 5}}
-          />
-          <TextInput placeholder="Search" />
+          </Text>
+          <TouchableOpacity onPress={() => {signOut()}}>
+            <Text>Signout</Text>
+          </TouchableOpacity>
         </View>
 
         <View
