@@ -1,8 +1,6 @@
 import React from 'react';
 import {SafeAreaView, View, Text, TouchableOpacity} from 'react-native';
 
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
 const OnboardingScreen = ({navigation}) => {
   return (
     <SafeAreaView
@@ -13,23 +11,31 @@ const OnboardingScreen = ({navigation}) => {
         alignItems: 'center',
         justifyContent: 'space-between',
       }}>
-      <View>
+      <View style={{ alignItems: 'center'}}>
         <Text
           style={{
-            fontSize: 40,
+            fontSize: 20,
             fontWeight: 'bold',
-            color: '#000',
-            alignItems: 'center',
+            color: '#0066cc',
             marginTop: 150,
           }}>
-          WELCOME TO OFFPAY
+          Welcome To
+        </Text>
+        <Text
+          style={{
+            fontSize: 70,
+            fontWeight: 'bold',
+            color: '#0066cc',
+            alignItems: 'center',
+          }}>
+          OFFPAY
         </Text>
       </View>
       <TouchableOpacity
         onPress={() => navigation.navigate('Login')}
         style={{
           padding: 20,
-          backgroundColor: '#000',
+          backgroundColor: '#0066cc',
           width: '90%',
           justifyContent: 'space-between',
           borderRadius: 5,

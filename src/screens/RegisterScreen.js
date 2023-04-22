@@ -1,204 +1,137 @@
-import React, {useState} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
-
-
-import InputField from '../components/InputField';
-
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
-import RegistrationSVG from '../assets/images/misc/registration.svg';
-import GoogleSVG from '../assets/images/misc/google.svg';
-import FacebookSVG from '../assets/images/misc/facebook.svg';
-import TwitterSVG from '../assets/images/misc/twitter.svg';
-import CustomButton from '../components/CustomButton';
+import React, { useState } from 'react';
+import { useRef } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
 const RegisterScreen = ({navigation}) => {
-  const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
-  const [dobLabel, setDobLabel] = useState('Date of Birth');
+  const [otp, setOTP] = useState('');
+
+  const handleOTPVerification = () => {
+    console.log(otp);
+    navigation.navigate('Login');
+    // handle OTP verification logic
+  };
+
+  const input1Ref = useRef();
+  const input2Ref = useRef();
+  const input3Ref = useRef();
+  const input4Ref = useRef();
 
   return (
-    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{paddingHorizontal: 25}}>
-        <View style={{alignItems: 'center'}}>
-          <RegistrationSVG
-            height={300}
-            width={300}
-            style={{transform: [{rotate: '-5deg'}]}}
-          />
-        </View>
-
-        <Text
-          style={{
-            fontFamily: 'Roboto-Medium',
-            fontSize: 28,
-            fontWeight: '500',
-            color: '#333',
-            marginBottom: 30,
-          }}>
-          Register
-        </Text>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginBottom: 30,
-          }}>
-          <TouchableOpacity
-            onPress={() => {}}
-            style={{
-              borderColor: '#ddd',
-              borderWidth: 2,
-              borderRadius: 10,
-              paddingHorizontal: 30,
-              paddingVertical: 10,
-            }}>
-            <GoogleSVG height={24} width={24} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {}}
-            style={{
-              borderColor: '#ddd',
-              borderWidth: 2,
-              borderRadius: 10,
-              paddingHorizontal: 30,
-              paddingVertical: 10,
-            }}>
-            <FacebookSVG height={24} width={24} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {}}
-            style={{
-              borderColor: '#ddd',
-              borderWidth: 2,
-              borderRadius: 10,
-              paddingHorizontal: 30,
-              paddingVertical: 10,
-            }}>
-            <TwitterSVG height={24} width={24} />
-          </TouchableOpacity>
-        </View>
-
-        <Text style={{textAlign: 'center', color: '#666', marginBottom: 30}}>
-          Or, register with email ...
-        </Text>
-
-        <InputField
-          label={'Full Name'}
-          icon={
-            <Ionicons
-              name="person-outline"
-              size={20}
-              color="#666"
-              style={{marginRight: 5}}
-            />
-          }
+    <View style={styles.container}>
+      <Text style={styles.title}>Enter OTP</Text>
+      <View style={styles.otpContainer}>
+        <TextInput
+          ref={input1Ref}
+          maxLength={1}
+          value={otp[0]}
+          onChangeText={(text) => {setOTP(text + otp.slice(1)); input2Ref.current.focus(); }}
+          style={styles.otpInput}
+          keyboardType="numeric"
         />
-
-        <InputField
-          label={'Email ID'}
-          icon={
-            <MaterialIcons
-              name="alternate-email"
-              size={20}
-              color="#666"
-              style={{marginRight: 5}}
-            />
-          }
-          keyboardType="email-address"
+        <TextInput
+          maxLength={1}
+          ref={input2Ref}
+          value={otp[1]}
+          onChangeText={(text) => {setOTP(otp.slice(0, 1) + text + otp.slice(2)); input3Ref.current.focus(); }}
+          style={styles.otpInput}
+          keyboardType="numeric"
         />
-
-        <InputField
-          label={'Password'}
-          icon={
-            <Ionicons
-              name="ios-lock-closed-outline"
-              size={20}
-              color="#666"
-              style={{marginRight: 5}}
-            />
-          }
-          inputType="password"
+        <TextInput
+          maxLength={1}
+          ref={input3Ref}
+          value={otp[2]}
+          onChangeText={(text) => {setOTP(otp.slice(0, 2) + text + otp.slice(3)); input4Ref.current.focus(); }}
+          style={styles.otpInput}
+          keyboardType="numeric"
         />
-
-        <InputField
-          label={'Confirm Password'}
-          icon={
-            <Ionicons
-              name="ios-lock-closed-outline"
-              size={20}
-              color="#666"
-              style={{marginRight: 5}}
-            />
-          }
-          inputType="password"
+        <TextInput
+          maxLength={1}
+          ref={input4Ref}
+          value={otp[3]}
+          onChangeText={(text) => {setOTP(otp.slice(0, 3) + text); }}
+          style={styles.otpInput}
+          keyboardType="numeric"
         />
-
-        <View
-          style={{
-            flexDirection: 'row',
-            borderBottomColor: '#ccc',
-            borderBottomWidth: 1,
-            paddingBottom: 8,
-            marginBottom: 30,
-          }}>
-          <Ionicons
-            name="calendar-outline"
-            size={20}
-            color="#666"
-            style={{marginRight: 5}}
-          />
-          <TouchableOpacity onPress={() => setOpen(true)}>
-            <Text style={{color: '#666', marginLeft: 5, marginTop: 5}}>
-              {dobLabel}
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* <DatePicker
-          modal
-          open={open}
-          date={date}
-          mode={'date'}
-          maximumDate={new Date('2005-01-01')}
-          minimumDate={new Date('1980-01-01')}
-          onConfirm={date => {
-            setOpen(false);
-            setDate(date);
-            setDobLabel(date.toDateString());
-          }}
-          onCancel={() => {
-            setOpen(false);
-          }}
-        /> */}
-
-        <CustomButton label={'Register'} onPress={() => {}} />
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginBottom: 30,
-          }}>
-          <Text>Already registered?</Text>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text style={{color: '#AD40AF', fontWeight: '700'}}> Login</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+      <TouchableOpacity onPress={handleOTPVerification} style={styles.button}>
+        <Text style={styles.buttonText}>Verify OTP</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 32,
+  },
+  otpContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '80%',
+    marginBottom: 32,
+  },
+  otpInput: {
+    width: '20%',
+    height: 48,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#999',
+    paddingHorizontal: 16,
+    textAlign: 'center',
+    fontSize: 18,
+  },
+  button: {
+    width: '80%',
+    height: 48,
+    borderRadius: 8,
+    backgroundColor: '#0066cc',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+});
+
 export default RegisterScreen;
+
+
+const InputScreen = () => {
+  const input1Ref = useRef();
+  const input2Ref = useRef();
+
+  const handleInput1Submit = () => {
+    input2Ref.current.focus();
+  };
+
+  const handleInput2Submit = () => {
+    // handle submission logic
+  };
+
+  return (
+    <View style={styles.container}>
+      <TextInput
+        ref={input1Ref}
+        style={styles.input}
+        onSubmitEditing={handleInput1Submit}
+        placeholder="Input 1"
+      />
+      <TextInput
+        ref={input2Ref}
+        style={styles.input}
+        onSubmitEditing={handleInput2Submit}
+        placeholder="Input 2"
+      />
+    </View>
+  );
+};
+
