@@ -6,7 +6,7 @@ const LoginScreen = ({navigation}) => {
 
   const handleLogin = () => {
     console.warn(number);
-    navigation.navigate('Register');
+    navigation.navigate('Register', { mobile: number });
     // handle login logic
   };
 

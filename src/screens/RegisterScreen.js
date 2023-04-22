@@ -1,13 +1,43 @@
 import React, { useState } from 'react';
 import { useRef } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+import { AuthContext } from './../components/context';
 
 const RegisterScreen = ({navigation}) => {
   const [otp, setOTP] = useState('');
+  const { signIn } = React.useContext(AuthContext);
+  const route = useRoute();
 
   const handleOTPVerification = () => {
-    console.log(otp);
-    navigation.navigate('Login');
+    // const foundUser = Users.filter(item => {
+    //   return mobile == route.params.mobile && otp == otp;
+    // });
+
+    if (route.params.mobile.length == 0 || otp.length == 0) {
+      Alert.alert(
+        'Wrong Input!',
+        'otp field cannot be empty.',
+        [{text: 'Okay'}],
+      );
+      return;
+    }
+
+    const foundUser = {
+      id: 2, 
+      email: 'user2@email.com',
+      username: 'user2', 
+      password: 'pass1234', 
+      userToken: 'token12345'
+  };
+    // if (foundUser.length == 0) {
+    //   Alert.alert('Invalid User!', 'Username or password is incorrect.', [
+    //     {text: 'Okay'},
+    //   ]);
+    //   return;
+    // }
+    signIn(foundUser);
+    // navigation.navigate('Login');123
     // handle OTP verification logic
   };
 
