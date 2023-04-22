@@ -1,21 +1,24 @@
-import { StyleSheet, Text, View } from 'react-native'
-import SplashScreen from 'react-native-splash-screen'
+import React from 'react';
+import { useState, useEffect } from "react";
 
+import {NavigationContainer} from '@react-navigation/native';
+import SplashScreen from 'react-native-splash-screen';
+import AuthStack from './src/navigation/AuthStack';
+import TabNavigator from './src/navigation/TabNavigator';
 
-import React, { useEffect } from 'react'
-
-const App = () => {
+function App() {
   useEffect(() => {
     SplashScreen.hide();
-  },[])
+  }, []);
+
 
   return (
-    <View>
-      <Text>App</Text>
-    </View>
-  )
+    <NavigationContainer>
+      {/* <TabNavigator /> */}
+      <AuthStack />
+    </NavigationContainer>
+  );
 }
 
-export default App
+export default App;
 
-const styles = StyleSheet.create({})
