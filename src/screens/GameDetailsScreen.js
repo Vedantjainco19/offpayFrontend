@@ -1,13 +1,21 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React from 'react';
+import {View, Text} from 'react-native';
+import QRCode from 'react-native-qrcode-svg';
 
 const GameDetailsScreen = ({navigation, route}) => {
-  return (
-    <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-      <Text>Game Details Screen</Text>
-      <Text>{route.params?.title}</Text>
-    </View>
-  )
-}
+  const tokenval = route.params?.token;
 
-export default GameDetailsScreen
+  return (
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <QRCode
+        value={tokenval}
+        size={300}
+        color="#000000"
+        backgroundColor="#ffffff"
+      />
+      <Text style = {{fontWeight : 'bold', fontSize : 25, marginTop : 20}}>Rs. {route.params?.amount}</Text>
+    </View>
+  );
+};
+
+export default GameDetailsScreen;

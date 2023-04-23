@@ -5,7 +5,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 
 import HomeScreen from '../screens/HomeScreen';
-import CartScreen from '../screens/CartScreen';
+import Recieve from '../screens/Recieve';
+import QRScanner from '../screens/QRscanner';
 import BankDetails from '../screens/FavoriteScreen';
 import GameDetailsScreen from '../screens/GameDetailsScreen';
 
@@ -24,11 +25,28 @@ const HomeStack = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="GameDetails"
+        name="tokenQR"
         component={GameDetailsScreen}
         options={({route}) => ({
           title: route.params?.title,
         })}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const RecieveStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="recHome"
+        component={Recieve}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="scanQR"
+        component={QRScanner}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
@@ -59,7 +77,7 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name="Cart"
-        component={CartScreen}
+        component={RecieveStack}
         options={{
           tabBarIcon: ({color, size}) => (
             <Text style={{color: color}}>Recieve Money</Text>
