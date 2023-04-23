@@ -44,4 +44,15 @@ public class MainActivity extends ReactActivity {
         DefaultNewArchitectureEntryPoint.getConcurrentReactEnabled() // concurrentRootEnabled
         );
   }
+
+    @Override
+  protected void onResume() {
+    super.onResume();
+    // Intent intent = getIntent();
+    // String action = intent.getAction();
+    // String data = intent.getDataString();
+    // if (action != null && action.equals("com.razorpay.reactlibrary.RazorpayPaymentActivity") && data != null) {
+    //   getReactInstanceManager().onActivityResult(this, 0, 0, intent);
+    // }
+  }
 }

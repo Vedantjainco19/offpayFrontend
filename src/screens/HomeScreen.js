@@ -22,9 +22,6 @@ export default function HomeScreen({navigation}) {
   const {signOut, toggleTheme} = React.useContext(AuthContext);
   const [data, setData] = useState([]);
   const [transactions, setTransactions] = useState([]);
-  const renderBanner = ({item, index}) => {
-    return <BannerSlider data={item} />;
-  };
 
   const onSelectSwitch = value => {
     if (value == 2) {
@@ -44,7 +41,7 @@ export default function HomeScreen({navigation}) {
     };
 
     fetch(
-      'https://afc0-2409-40c4-a-461-8482-db42-ef30-548d.ngrok-free.app/api/getAllTokens?userMobileNo=9479774658',
+      'https://719a-2401-4900-1c18-673d-2535-a652-1f4c-e84a.ngrok-free.app/api/getAllTokens?userMobileNo=9479774658',
       requestOptions,
     )
       .then(response => response.text())
@@ -77,7 +74,7 @@ export default function HomeScreen({navigation}) {
     };
 
     fetch(
-      'https://afc0-2409-40c4-a-461-8482-db42-ef30-548d.ngrok-free.app/api/getTransactions/',
+      'https://719a-2401-4900-1c18-673d-2535-a652-1f4c-e84a.ngrok-free.app/api/getTransactions/',
       requestOptions,
     )
       .then(response => response.text())
@@ -104,7 +101,11 @@ export default function HomeScreen({navigation}) {
           marginTop: 10,
           marginLeft: '5%',
         }}>
-        <TouchableOpacity onPress={{}} style={styles.button}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('tokenQR');
+          }}
+          style={styles.button}>
           <Text style={styles.buttonText}>Create New Token</Text>
         </TouchableOpacity>
       </View>
@@ -137,20 +138,18 @@ export default function HomeScreen({navigation}) {
             ))
           : gamesTab == 1 && <Text>{data}</Text>}
 
-        {gamesTab == 2 && transactions ? (
-          transactions.map(item => (
-            <ListItemTrans
-              id={item.TransactionTime}
-              sender={item.Sender}
-              reciever={item.Reciever}
-              amount={item.amount}
-              TransactionTime={item.TransactionTime}
-              Description={item.Description}
-            />
-          ))
-        ) : (
-          gamesTab == 2 && <Text>{transactions}</Text>
-        )}
+        {gamesTab == 2 && transactions
+          ? transactions.map(item => (
+              <ListItemTrans
+                id={item.TransactionTime}
+                sender={item.Sender}
+                reciever={item.Reciever}
+                amount={item.amount}
+                TransactionTime={item.TransactionTime}
+                Description={item.Description}
+              />
+            ))
+          : gamesTab == 2 && <Text>{transactions}</Text>}
       </ScrollView>
     </SafeAreaView>
   );

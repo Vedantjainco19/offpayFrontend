@@ -73,10 +73,13 @@ const BankDetails = ({navigation}) => {
         setLoading(true);
         var requestOptions = {
           method: 'GET',
-          redirect: 'follow'
+          redirect: 'follow',
         };
-        
-        fetch("https://afc0-2409-40c4-a-461-8482-db42-ef30-548d.ngrok-free.app/api/getBankdetails?userMobileNo=9479774658", requestOptions)
+
+        fetch(
+          'https://719a-2401-4900-1c18-673d-2535-a652-1f4c-e84a.ngrok-free.app/api/getBankdetails?userMobileNo=9479774658',
+          requestOptions,
+        )
           .then(response => response.text())
           .then(result => getBankdetailResultHandle(result))
           .catch(error => console.log('error', error));
@@ -86,7 +89,7 @@ const BankDetails = ({navigation}) => {
     }
   };
 
-  const getBankdetailResultHandle = (result) => {
+  const getBankdetailResultHandle = result => {
     setLoading(false);
     const res = JSON.parse(result);
 
@@ -146,7 +149,7 @@ const BankDetails = ({navigation}) => {
       };
 
       fetch(
-        'https://afc0-2409-40c4-a-461-8482-db42-ef30-548d.ngrok-free.app/api/addBankdetails/',
+        'https://719a-2401-4900-1c18-673d-2535-a652-1f4c-e84a.ngrok-free.app/api/addBankdetails/',
         requestOptions,
       )
         .then(response => response.text())
@@ -166,7 +169,6 @@ const BankDetails = ({navigation}) => {
     setErrors(prevState => ({...prevState, [input]: error}));
   };
 
-  
   return (
     <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1}}>
       <Loader visible={loading} />

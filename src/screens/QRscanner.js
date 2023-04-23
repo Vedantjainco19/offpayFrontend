@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,7 +6,7 @@ import {
   PermissionsAndroid,
   Platform,
 } from 'react-native';
-import { RNCamera } from 'react-native-camera';
+import {RNCamera} from 'react-native-camera';
 
 export default class QRScanner extends Component {
   componentDidMount() {
@@ -22,7 +22,6 @@ export default class QRScanner extends Component {
   }
 
   onBarCodeRead = event => {
-    
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 
@@ -40,14 +39,13 @@ export default class QRScanner extends Component {
     };
 
     fetch(
-      'https://afc0-2409-40c4-a-461-8482-db42-ef30-548d.ngrok-free.app/api/recieve/',
+      'https://719a-2401-4900-1c18-673d-2535-a652-1f4c-e84a.ngrok-free.app/api/recieve/',
       requestOptions,
     )
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));
 
-    
     console.log(event.data);
     this.props.navigation.navigate('Home2');
   };
