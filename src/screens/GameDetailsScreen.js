@@ -74,7 +74,7 @@ const GameDetailsScreen = ({navigation, route}) => {
                 Alert.alert('Error', 'Something went wrong');
               }
               setTimeout(() => {
-                navigation.nvaigate('Home2');
+                navigation.navigate('Home2');
               }, 2000);
             })
             .catch(error => console.log('error', error));
@@ -115,7 +115,19 @@ const GameDetailsScreen = ({navigation, route}) => {
               borderRadius: 10,
               borderColor: 'grey',
             }}>
-            <TextInput
+          <Text
+            style={[
+              {
+                fontSize: 28,
+                color: 'blue',
+                marginHorizontal: 20,
+                margin: 20,
+                fontWeight: 'bold',
+              },
+            ]}>
+            Create Secure Token
+          </Text>
+          <TextInput
               placeholder="Enter Name"
               value={tokenName}
               onChangeText={text => {
@@ -132,18 +144,6 @@ const GameDetailsScreen = ({navigation, route}) => {
               }}
             />
           </View>
-          <Text
-            style={[
-              {
-                fontSize: 28,
-                color: 'blue',
-                marginHorizontal: 20,
-                margin: 20,
-                fontWeight: 'bold',
-              },
-            ]}>
-            Create Secure Token
-          </Text>
           <View
             style={{
               borderRadius: 10,

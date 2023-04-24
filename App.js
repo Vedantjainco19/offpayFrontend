@@ -104,7 +104,7 @@ const App = () => {
     );
   }
   return (
-    <AuthContext.Provider value={{authContext,loginState}}>
+    <AuthContext.Provider value={{authContext , loginState}}>
       <NavigationContainer>
         {loginState.userToken !== null ? <TabNavigator /> : <AuthStack />}
       </NavigationContainer>

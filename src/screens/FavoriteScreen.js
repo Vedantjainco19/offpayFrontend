@@ -17,7 +17,7 @@ import Loader from '../components/Loader';
 import {AuthContext} from '../components/context';
 
 const BankDetails = ({navigation}) => {
-  const {signOut, toggleTheme} = React.useContext(AuthContext);
+  const {authContext} = React.useContext(AuthContext);
   const { loginState } = React.useContext(AuthContext);
   const userToken = loginState.userToken;
   const [inputs, setInputs] = React.useState({
@@ -133,8 +133,7 @@ const BankDetails = ({navigation}) => {
   };
 
   const saveBankdetails = async () => {
-    const { loginState } = React.useContext(AuthContext);
-    const userToken = loginState.userToken;
+
     setLoading(true);
     try {
       var myHeaders = new Headers();
@@ -227,7 +226,7 @@ const BankDetails = ({navigation}) => {
           <TouchableOpacity onPress={validate} style={styles.button}>
             <Text style={styles.buttonText}>Save Details</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => signOut()} style={styles.redbutton}>
+          <TouchableOpacity onPress={() => authContext.signOut()} style={styles.redbutton}>
             <Text style={styles.buttonText}>Sign Out</Text>
           </TouchableOpacity>
         </View>

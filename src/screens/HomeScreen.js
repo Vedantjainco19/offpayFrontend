@@ -22,7 +22,7 @@ export default function HomeScreen({navigation}) {
   const { loginState } = React.useContext(AuthContext);
   const userToken = loginState.userToken;
   const [data, setData] = useState([]);
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState();
 
   const onSelectSwitch = value => {
     if (value == 2) {
@@ -60,26 +60,21 @@ export default function HomeScreen({navigation}) {
   };
 
   const fetchtransData = async () => {
-    const { loginState } = React.useContext(AuthContext);
-    const userToken = loginState.userToken;
     var myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-
+    myHeaders.append("Content-Type", "application/json");
+    
     var raw = JSON.stringify({
       userMobileNo: userToken,
     });
-
+    
     var requestOptions = {
       method: 'POST',
       headers: myHeaders,
       body: raw,
       redirect: 'follow',
     };
-
-    fetch(
-      'https://719a-2401-4900-1c18-673d-2535-a652-1f4c-e84a.ngrok-free.app/api/getTransactions/',
-      requestOptions,
-    )
+    
+    await fetch("https://719a-2401-4900-1c18-673d-2535-a652-1f4c-e84a.ngrok-free.app/api/getTransactions/", requestOptions)
       .then(response => response.text())
       .then(result => {
         const trans = JSON.parse(result);
@@ -88,7 +83,6 @@ export default function HomeScreen({navigation}) {
           setTransactions(tokendata);
           AsyncStorage.setItem('transactions', JSON.stringify(tokendata));
         } else {
-          setTransactions([]);
         }
       })
       .catch(error => console.log('error', error));

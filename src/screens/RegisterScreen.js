@@ -13,7 +13,7 @@ import {AuthContext} from './../components/context';
 
 const RegisterScreen = ({navigation}) => {
   const [otp, setOTP] = useState('');
-  const { signIn } = React.useContext(AuthContext);
+  const { authContext } = React.useContext(AuthContext);
   const route = useRoute();
 
   const handleOTPVerification = () => {
@@ -59,7 +59,7 @@ const RegisterScreen = ({navigation}) => {
             userToken: route.params.mobile,
           };
           setTimeout(() => {
-            signIn(foundUser);
+            authContext.signIn(foundUser);
           }, 1000);
         } else {
           Alert.alert('Error', tokens.message);
@@ -81,9 +81,11 @@ const RegisterScreen = ({navigation}) => {
           ref={input1Ref}
           maxLength={1}
           value={otp[0]}
+          onKeyPress={({ nativeEvent }) => {
+            nativeEvent.key === 'Backspace' ? input1Ref.current.focus() : input2Ref.current.focus();
+          }}
           onChangeText={text => {
             setOTP(text + otp.slice(1));
-            input2Ref.current.focus();
           }}
           style={styles.otpInput}
           keyboardType="numeric"
@@ -92,9 +94,11 @@ const RegisterScreen = ({navigation}) => {
           maxLength={1}
           ref={input2Ref}
           value={otp[1]}
+          onKeyPress={({ nativeEvent }) => {
+            nativeEvent.key === 'Backspace' ? input1Ref.current.focus() : input3Ref.current.focus();
+          }}
           onChangeText={text => {
             setOTP(otp.slice(0, 1) + text + otp.slice(2));
-            input3Ref.current.focus();
           }}
           style={styles.otpInput}
           keyboardType="numeric"
@@ -103,9 +107,11 @@ const RegisterScreen = ({navigation}) => {
           maxLength={1}
           ref={input3Ref}
           value={otp[2]}
+          onKeyPress={({ nativeEvent }) => {
+            nativeEvent.key === 'Backspace' ? input2Ref.current.focus() : input4Ref.current.focus();
+          }}
           onChangeText={text => {
             setOTP(otp.slice(0, 2) + text + otp.slice(3));
-            input4Ref.current.focus();
           }}
           style={styles.otpInput}
           keyboardType="numeric"
@@ -114,6 +120,9 @@ const RegisterScreen = ({navigation}) => {
           maxLength={1}
           ref={input4Ref}
           value={otp[3]}
+          onKeyPress={({ nativeEvent }) => {
+            nativeEvent.key === 'Backspace' ? input3Ref.current.focus() : input4Ref.current.focus();
+          }}
           onChangeText={text => {
             setOTP(otp.slice(0, 3) + text);
           }}
