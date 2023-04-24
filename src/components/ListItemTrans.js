@@ -25,7 +25,7 @@ export default function ListItemTrans({sender,reciever, TransactionTime, amount,
                 fontSize: 16,
                 fontWeight : 'bold'
               }}>
-              {sender}
+              {reciever}
             </Text>
             <Text
               numberOfLines={1}

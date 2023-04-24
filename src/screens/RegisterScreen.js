@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
-import { useRef } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { useRoute } from '@react-navigation/native';
-import { AuthContext } from './../components/context';
+import React, {useState} from 'react';
+import {useRef} from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from 'react-native';
+import {useRoute} from '@react-navigation/native';
+import {AuthContext} from './../components/context';
 
 const RegisterScreen = ({navigation}) => {
   const [otp, setOTP] = useState('');
@@ -15,30 +22,50 @@ const RegisterScreen = ({navigation}) => {
     // });
 
     if (route.params.mobile.length == 0 || otp.length == 0) {
-      Alert.alert(
-        'Wrong Input!',
-        'otp field cannot be empty.',
-        [{text: 'Okay'}],
-      );
+      Alert.alert('Wrong Input!', 'otp field cannot be empty.', [
+        {text: 'Okay'},
+      ]);
       return;
     }
 
-    const foundUser = {
-      id: 2, 
-      email: 'user2@email.com',
-      username: 'user2', 
-      password: 'pass1234', 
-      userToken: 'token12345'
-  };
-    // if (foundUser.length == 0) {
-    //   Alert.alert('Invalid User!', 'Username or password is incorrect.', [
-    //     {text: 'Okay'},
-    //   ]);
-    //   return;
-    // }
-    signIn(foundUser);
-    // navigation.navigate('Login');123
-    // handle OTP verification logic
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+    var raw = JSON.stringify({
+      mobileNo: route.params.mobile,
+      otp: otp,
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
+
+    fetch(
+      'https://719a-2401-4900-1c18-673d-2535-a652-1f4c-e84a.ngrok-free.app/api/verifyLogin/',
+      requestOptions,
+    )
+      .then(response => response.text())
+      .then(result => {
+        const tokens = JSON.parse(result);
+        if (tokens.success == true) {
+          const foundUser = {
+            id: 1,
+            email: 'user@email.com',
+            username: route.params.mobile,
+            password: 'pass1234',
+            userToken: route.params.mobile,
+          };
+          setTimeout(() => {
+            signIn(foundUser);
+          }, 1000);
+        } else {
+          Alert.alert('Error', tokens.message);
+        }
+      })
+      .catch(error => console.log('error', error));
   };
 
   const input1Ref = useRef();
@@ -54,7 +81,10 @@ const RegisterScreen = ({navigation}) => {
           ref={input1Ref}
           maxLength={1}
           value={otp[0]}
-          onChangeText={(text) => {setOTP(text + otp.slice(1)); input2Ref.current.focus(); }}
+          onChangeText={text => {
+            setOTP(text + otp.slice(1));
+            input2Ref.current.focus();
+          }}
           style={styles.otpInput}
           keyboardType="numeric"
         />
@@ -62,7 +92,10 @@ const RegisterScreen = ({navigation}) => {
           maxLength={1}
           ref={input2Ref}
           value={otp[1]}
-          onChangeText={(text) => {setOTP(otp.slice(0, 1) + text + otp.slice(2)); input3Ref.current.focus(); }}
+          onChangeText={text => {
+            setOTP(otp.slice(0, 1) + text + otp.slice(2));
+            input3Ref.current.focus();
+          }}
           style={styles.otpInput}
           keyboardType="numeric"
         />
@@ -70,7 +103,10 @@ const RegisterScreen = ({navigation}) => {
           maxLength={1}
           ref={input3Ref}
           value={otp[2]}
-          onChangeText={(text) => {setOTP(otp.slice(0, 2) + text + otp.slice(3)); input4Ref.current.focus(); }}
+          onChangeText={text => {
+            setOTP(otp.slice(0, 2) + text + otp.slice(3));
+            input4Ref.current.focus();
+          }}
           style={styles.otpInput}
           keyboardType="numeric"
         />
@@ -78,7 +114,9 @@ const RegisterScreen = ({navigation}) => {
           maxLength={1}
           ref={input4Ref}
           value={otp[3]}
-          onChangeText={(text) => {setOTP(otp.slice(0, 3) + text); }}
+          onChangeText={text => {
+            setOTP(otp.slice(0, 3) + text);
+          }}
           style={styles.otpInput}
           keyboardType="numeric"
         />
@@ -164,4 +202,3 @@ const InputScreen = () => {
     </View>
   );
 };
-

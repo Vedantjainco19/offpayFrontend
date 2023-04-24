@@ -22,12 +22,14 @@ export default class QRScanner extends Component {
   }
 
   onBarCodeRead = event => {
+    const { loginState } = React.useContext(AuthContext);
+    const userToken = loginState.userToken;
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 
     var raw = JSON.stringify({
       token: event.data,
-      userMobileNo: '9165176133',
+      userMobileNo: userToken,
       amount: this.props.amount,
     });
 

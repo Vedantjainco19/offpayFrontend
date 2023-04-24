@@ -1,11 +1,40 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView , Image} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView ,  Alert, Image} from 'react-native';
 
 const LoginScreen = ({navigation}) => {
   const [number, setNumber] = useState('');
 
   const handleLogin = () => {
-    navigation.navigate('Register', { mobile: number });
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      "mobileNo": number
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("https://719a-2401-4900-1c18-673d-2535-a652-1f4c-e84a.ngrok-free.app/api/login/", requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        const tokens = JSON.parse(result);
+        if (tokens.success == true) {
+          Alert.alert('Success', tokens.message);
+          setTimeout(() => {
+            navigation.navigate('Register', { mobile: number });
+          }, 1000);
+        } else {
+          Alert.alert('Error', 'Something went wrong');
+        }
+      })
+      .catch(error => console.log('error', error));
+
+
     // handle login logic
   };
 

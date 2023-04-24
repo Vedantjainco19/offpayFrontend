@@ -74,8 +74,8 @@ const App = () => {
       }
       dispatch({ type: 'LOGOUT' });
     },
-    signUp: () => {
-
+    retrieveToken: async(token) => {
+      dispatch({ type: 'RETRIEVE_TOKEN', token: token });
     },
   }), []);
 
@@ -104,7 +104,7 @@ const App = () => {
     );
   }
   return (
-    <AuthContext.Provider value={authContext}>
+    <AuthContext.Provider value={{authContext,loginState}}>
       <NavigationContainer>
         {loginState.userToken !== null ? <TabNavigator /> : <AuthStack />}
       </NavigationContainer>

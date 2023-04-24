@@ -38,7 +38,7 @@ const OnboardingScreen = ({navigation}) => {
           backgroundColor: '#0066cc',
           width: '90%',
           justifyContent: 'space-between',
-          borderRadius: 5,
+          borderRadius: 25,
           flexDirection: 'row',
           marginBottom: 20,
         }}>

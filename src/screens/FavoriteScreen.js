@@ -14,8 +14,12 @@ import {
 import COLORS from '../components/colors';
 import Input from '../components/Input';
 import Loader from '../components/Loader';
+import {AuthContext} from '../components/context';
 
 const BankDetails = ({navigation}) => {
+  const {signOut, toggleTheme} = React.useContext(AuthContext);
+  const { loginState } = React.useContext(AuthContext);
+  const userToken = loginState.userToken;
   const [inputs, setInputs] = React.useState({
     accNum: '',
     fullname: '',
@@ -76,13 +80,13 @@ const BankDetails = ({navigation}) => {
           redirect: 'follow',
         };
 
-        fetch(
-          'https://719a-2401-4900-1c18-673d-2535-a652-1f4c-e84a.ngrok-free.app/api/getBankdetails?userMobileNo=9479774658',
-          requestOptions,
-        )
-          .then(response => response.text())
-          .then(result => getBankdetailResultHandle(result))
-          .catch(error => console.log('error', error));
+            fetch(
+          'https://719a-2401-4900-1c18-673d-2535-a652-1f4c-e84a.ngrok-free.app/api/getBankdetails?userMobileNo='+userToken,
+              requestOptions,
+            )
+              .then(response => response.text())
+              .then(result => getBankdetailResultHandle(result))
+              .catch(error => console.log('error', error));
       }
     } catch (error) {
       console.log(error);
@@ -129,13 +133,15 @@ const BankDetails = ({navigation}) => {
   };
 
   const saveBankdetails = async () => {
+    const { loginState } = React.useContext(AuthContext);
+    const userToken = loginState.userToken;
     setLoading(true);
     try {
       var myHeaders = new Headers();
       myHeaders.append('Content-Type', 'application/json');
 
       var raw = JSON.stringify({
-        userMobileNo: '9479774658',
+        userMobileNo: userToken,
         name: inputs.fullname,
         ifsc: inputs.IFSC,
         account: inputs.accNum,
@@ -221,6 +227,9 @@ const BankDetails = ({navigation}) => {
           <TouchableOpacity onPress={validate} style={styles.button}>
             <Text style={styles.buttonText}>Save Details</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={() => signOut()} style={styles.redbutton}>
+            <Text style={styles.buttonText}>Sign Out</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -233,6 +242,15 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 8,
     backgroundColor: '#0066cc',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 22,
+  },
+  redbutton: {
+    width: '100%',
+    height: 48,
+    borderRadius: 8,
+    backgroundColor: 'red',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 22,

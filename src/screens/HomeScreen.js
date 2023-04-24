@@ -19,7 +19,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function HomeScreen({navigation}) {
   const [gamesTab, setGamesTab] = useState(1);
-  const {signOut, toggleTheme} = React.useContext(AuthContext);
+  const { loginState } = React.useContext(AuthContext);
+  const userToken = loginState.userToken;
   const [data, setData] = useState([]);
   const [transactions, setTransactions] = useState([]);
 
@@ -41,7 +42,7 @@ export default function HomeScreen({navigation}) {
     };
 
     fetch(
-      'https://719a-2401-4900-1c18-673d-2535-a652-1f4c-e84a.ngrok-free.app/api/getAllTokens?userMobileNo=9479774658',
+      'https://719a-2401-4900-1c18-673d-2535-a652-1f4c-e84a.ngrok-free.app/api/getAllTokens?userMobileNo='+userToken,
       requestOptions,
     )
       .then(response => response.text())
@@ -59,11 +60,13 @@ export default function HomeScreen({navigation}) {
   };
 
   const fetchtransData = async () => {
+    const { loginState } = React.useContext(AuthContext);
+    const userToken = loginState.userToken;
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 
     var raw = JSON.stringify({
-      userMobileNo: '9165176133',
+      userMobileNo: userToken,
     });
 
     var requestOptions = {
@@ -149,7 +152,7 @@ export default function HomeScreen({navigation}) {
                 Description={item.Description}
               />
             ))
-          : gamesTab == 2 && <Text>{transactions}</Text>}
+          : gamesTab == 2 && <Text>No Transactions Done</Text>}
       </ScrollView>
     </SafeAreaView>
   );
