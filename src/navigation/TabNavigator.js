@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text } from 'react-native';
+import {Text} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
@@ -8,7 +8,7 @@ import HomeScreen from '../screens/HomeScreen';
 import Recieve from '../screens/Recieve';
 import QRScanner from '../screens/QRscanner';
 import BankDetails from '../screens/FavoriteScreen';
-import GameDetailsScreen from '../screens/GameDetailsScreen';
+import TokenDetailScreen from '../screens/TokenDetailScreen';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
@@ -26,7 +26,7 @@ const HomeStack = () => {
       />
       <Stack.Screen
         name="tokenQR"
-        component={GameDetailsScreen}
+        component={TokenDetailScreen}
         options={({route}) => ({
           title: route.params?.title,
         })}
@@ -71,7 +71,7 @@ const TabNavigator = () => {
             backgroundColor: '#0066cc',
           },
           tabBarIcon: ({color, size}) => (
-            <Text style={{color:color}}>Tokens</Text>
+            <Text style={{color: color}}>Tokens</Text>
           ),
         })}
       />

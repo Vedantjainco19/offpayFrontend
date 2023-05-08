@@ -1,7 +1,17 @@
 import React from 'react';
-import {SafeAreaView, View, Text, TouchableOpacity} from 'react-native';
+import {SafeAreaView, View, Text, TouchableOpacity, Image} from 'react-native';
 
 const OnboardingScreen = ({navigation}) => {
+
+  const Logo = () => {
+    return (
+      <Image
+        source={require('../assets/images/icon.png')}
+        style={{width: 200 ,height: 200}}
+      />
+    );
+  };
+
   return (
     <SafeAreaView
       style={{
@@ -30,6 +40,7 @@ const OnboardingScreen = ({navigation}) => {
           }}>
           OFFPAY
         </Text>
+        <Logo />
       </View>
       <TouchableOpacity
         onPress={() => navigation.navigate('Login')}

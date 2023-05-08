@@ -13,7 +13,7 @@ import {AuthContext} from './../components/context';
 
 const RegisterScreen = ({navigation}) => {
   const [otp, setOTP] = useState('');
-  const { authContext } = React.useContext(AuthContext);
+  const {authContext} = React.useContext(AuthContext);
   const route = useRoute();
 
   const handleOTPVerification = () => {
@@ -44,7 +44,7 @@ const RegisterScreen = ({navigation}) => {
     };
 
     fetch(
-      'https://719a-2401-4900-1c18-673d-2535-a652-1f4c-e84a.ngrok-free.app/api/verifyLogin/',
+      'https://592c-2401-4900-51c7-f912-75cf-86ec-8d03-4ac.ngrok-free.app/api/verifyLogin/',
       requestOptions,
     )
       .then(response => response.text())
@@ -81,8 +81,10 @@ const RegisterScreen = ({navigation}) => {
           ref={input1Ref}
           maxLength={1}
           value={otp[0]}
-          onKeyPress={({ nativeEvent }) => {
-            nativeEvent.key === 'Backspace' ? input1Ref.current.focus() : input2Ref.current.focus();
+          onKeyPress={({nativeEvent}) => {
+            nativeEvent.key === 'Backspace'
+              ? input1Ref.current.focus()
+              : input2Ref.current.focus();
           }}
           onChangeText={text => {
             setOTP(text + otp.slice(1));
@@ -94,8 +96,10 @@ const RegisterScreen = ({navigation}) => {
           maxLength={1}
           ref={input2Ref}
           value={otp[1]}
-          onKeyPress={({ nativeEvent }) => {
-            nativeEvent.key === 'Backspace' ? input1Ref.current.focus() : input3Ref.current.focus();
+          onKeyPress={({nativeEvent}) => {
+            nativeEvent.key === 'Backspace'
+              ? input1Ref.current.focus()
+              : input3Ref.current.focus();
           }}
           onChangeText={text => {
             setOTP(otp.slice(0, 1) + text + otp.slice(2));
@@ -107,8 +111,10 @@ const RegisterScreen = ({navigation}) => {
           maxLength={1}
           ref={input3Ref}
           value={otp[2]}
-          onKeyPress={({ nativeEvent }) => {
-            nativeEvent.key === 'Backspace' ? input2Ref.current.focus() : input4Ref.current.focus();
+          onKeyPress={({nativeEvent}) => {
+            nativeEvent.key === 'Backspace'
+              ? input2Ref.current.focus()
+              : input4Ref.current.focus();
           }}
           onChangeText={text => {
             setOTP(otp.slice(0, 2) + text + otp.slice(3));
@@ -120,8 +126,10 @@ const RegisterScreen = ({navigation}) => {
           maxLength={1}
           ref={input4Ref}
           value={otp[3]}
-          onKeyPress={({ nativeEvent }) => {
-            nativeEvent.key === 'Backspace' ? input3Ref.current.focus() : input4Ref.current.focus();
+          onKeyPress={({nativeEvent}) => {
+            nativeEvent.key === 'Backspace'
+              ? input3Ref.current.focus()
+              : input4Ref.current.focus();
           }}
           onChangeText={text => {
             setOTP(otp.slice(0, 3) + text);
@@ -180,7 +188,6 @@ const styles = StyleSheet.create({
 });
 
 export default RegisterScreen;
-
 
 const InputScreen = () => {
   const input1Ref = useRef();

@@ -5,7 +5,7 @@ import QRCode from 'react-native-qrcode-svg';
 import RazorpayCheckout from 'react-native-razorpay';
 import {AuthContext} from '../components/context';
 
-const GameDetailsScreen = ({navigation, route}) => {
+const TokenDetailScreen = ({navigation, route}) => {
   const tokenval = route.params?.token;
 
   if (tokenval) {
@@ -23,7 +23,7 @@ const GameDetailsScreen = ({navigation, route}) => {
       </View>
     );
   } else {
-    const { loginState } = React.useContext(AuthContext);
+    const {loginState} = React.useContext(AuthContext);
     const userToken = loginState.userToken;
     const [amount, setAmount] = useState('');
     const [timeDuration, setTimeDuration] = useState('');
@@ -62,7 +62,7 @@ const GameDetailsScreen = ({navigation, route}) => {
           };
 
           fetch(
-            'https://719a-2401-4900-1c18-673d-2535-a652-1f4c-e84a.ngrok-free.app/api/createToken/',
+            'https://592c-2401-4900-51c7-f912-75cf-86ec-8d03-4ac.ngrok-free.app/api/createToken/',
             requestOptions,
           )
             .then(response => response.text())
@@ -71,11 +71,11 @@ const GameDetailsScreen = ({navigation, route}) => {
               if (tokens.success == true) {
                 Alert.alert('Success', tokens.message);
               } else {
-                Alert.alert('Error', 'Something went wrong');
+                Alert.alert('Error', 'Something went wrong, Do not worry! your amount will refunded in your accounts');
               }
               setTimeout(() => {
-                navigation.navigate('Home2');
-              }, 2000);
+                navigation.navigate('Home');
+              }, 500);
             })
             .catch(error => console.log('error', error));
         })
@@ -97,9 +97,7 @@ const GameDetailsScreen = ({navigation, route}) => {
           justifyContent: 'center',
         }}
         onPress={() => {
-          setModalVisible(false);
-          // this.setState({showAccountsPopup: false});
-          // this.setState({isSelectAccountButtonSelected: this.state.paymentMode.uniqueName != '' ? true : false});
+          navigation.navigate('Home');
         }}>
         <View
           style={{
@@ -115,19 +113,19 @@ const GameDetailsScreen = ({navigation, route}) => {
               borderRadius: 10,
               borderColor: 'grey',
             }}>
-          <Text
-            style={[
-              {
-                fontSize: 28,
-                color: 'blue',
-                marginHorizontal: 20,
-                margin: 20,
-                fontWeight: 'bold',
-              },
-            ]}>
-            Create Secure Token
-          </Text>
-          <TextInput
+            <Text
+              style={[
+                {
+                  fontSize: 28,
+                  color: 'blue',
+                  marginHorizontal: 20,
+                  margin: 20,
+                  fontWeight: 'bold',
+                },
+              ]}>
+              Create Secure Token
+            </Text>
+            <TextInput
               placeholder="Enter Name"
               value={tokenName}
               onChangeText={text => {
@@ -186,7 +184,6 @@ const GameDetailsScreen = ({navigation, route}) => {
               onChangeText={text => {
                 setTimeDuration(text);
               }}
-            
             />
 
             <TouchableOpacity
@@ -215,4 +212,4 @@ const GameDetailsScreen = ({navigation, route}) => {
   }
 };
 
-export default GameDetailsScreen;
+export default TokenDetailScreen;

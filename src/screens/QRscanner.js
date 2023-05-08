@@ -1,69 +1,77 @@
-import React, {Component} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  PermissionsAndroid,
-  Platform,
-} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, View, Alert} from 'react-native';
 import {RNCamera} from 'react-native-camera';
+import {AuthContext} from '../components/context';
+import {useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
-export default class QRScanner extends Component {
-  componentDidMount() {
-    if (Platform.OS === 'android') {
-      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
-        title: 'Camera Permission',
-        message: 'App needs access to camera',
-        buttonNeutral: 'Ask Me Later',
-        buttonNegative: 'Cancel',
-        buttonPositive: 'OK',
+const QRScanner = () => {
+  const {loginState} = React.useContext(AuthContext);
+  const userToken = loginState.userToken;
+  const route = useRoute();
+  const navigation = useNavigation();
+  const [scanningEnabled, setScanningEnabled] = useState(true);
+
+  const handleBarCodeRead = event => {
+    if (scanningEnabled) {
+      var myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+
+      var raw = JSON.stringify({
+        token: event.data,
+        userMobileNo: userToken,
+        amount: route.params.amount,
       });
+
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow',
+      };
+
+      fetch(
+        'https://592c-2401-4900-51c7-f912-75cf-86ec-8d03-4ac.ngrok-free.app/api/recieve/',
+        requestOptions,
+      )
+        .then(response => response.text())
+        .then(result => {
+          const tokens = JSON.parse(result);
+          if (tokens.success == true) {
+            setScanningEnabled(false);
+            Alert.alert('Success', tokens.message);
+          } else {
+            Alert.alert('Error', tokens.message);
+            setScanningEnabled(false);
+          }
+          setTimeout(() => {
+            setScanningEnabled(false);
+            navigation.navigate('Home');
+          }, 500);
+        })
+        .catch(error => console.log('error', error));
+      // Disable scanning after successfully scanning a QR code
+      setScanningEnabled(false);
+      setTimeout(() => {
+        navigation.navigate('Home');
+      }, 100);
     }
-  }
-
-  onBarCodeRead = event => {
-    const { loginState } = React.useContext(AuthContext);
-    const userToken = loginState.userToken;
-    var myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-
-    var raw = JSON.stringify({
-      token: event.data,
-      userMobileNo: userToken,
-      amount: this.props.amount,
-    });
-
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow',
-    };
-
-    fetch(
-      'https://719a-2401-4900-1c18-673d-2535-a652-1f4c-e84a.ngrok-free.app/api/recieve/',
-      requestOptions,
-    )
-      .then(response => response.text())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
-
-    console.log(event.data);
-    this.props.navigation.navigate('Home2');
   };
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <RNCamera style={styles.camera} onBarCodeRead={this.onBarCodeRead}>
-          <View style={styles.rectangleContainer}>
-            <View style={styles.rectangle} />
-          </View>
-        </RNCamera>
-      </View>
-    );
-  }
-}
+  return (
+    <View style={styles.container}>
+      <RNCamera
+        style={styles.camera}
+        onBarCodeRead={handleBarCodeRead}
+        captureAudio={false}
+        barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}>
+        <View style={styles.rectangleContainer}>
+          <View style={styles.rectangle} />
+        </View>
+      </RNCamera>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -89,3 +97,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
 });
+
+export default QRScanner;

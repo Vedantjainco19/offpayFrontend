@@ -18,7 +18,7 @@ import {AuthContext} from '../components/context';
 
 const BankDetails = ({navigation}) => {
   const {authContext} = React.useContext(AuthContext);
-  const { loginState } = React.useContext(AuthContext);
+  const {loginState} = React.useContext(AuthContext);
   const userToken = loginState.userToken;
   const [inputs, setInputs] = React.useState({
     accNum: '',
@@ -80,13 +80,14 @@ const BankDetails = ({navigation}) => {
           redirect: 'follow',
         };
 
-            fetch(
-          'https://719a-2401-4900-1c18-673d-2535-a652-1f4c-e84a.ngrok-free.app/api/getBankdetails?userMobileNo='+userToken,
-              requestOptions,
-            )
-              .then(response => response.text())
-              .then(result => getBankdetailResultHandle(result))
-              .catch(error => console.log('error', error));
+        fetch(
+          'https://592c-2401-4900-51c7-f912-75cf-86ec-8d03-4ac.ngrok-free.app/api/getBankdetails?userMobileNo=' +
+            userToken,
+          requestOptions,
+        )
+          .then(response => response.text())
+          .then(result => getBankdetailResultHandle(result))
+          .catch(error => console.log('error', error));
       }
     } catch (error) {
       console.log(error);
@@ -154,7 +155,7 @@ const BankDetails = ({navigation}) => {
       };
 
       fetch(
-        'https://719a-2401-4900-1c18-673d-2535-a652-1f4c-e84a.ngrok-free.app/api/addBankdetails/',
+        'https://592c-2401-4900-51c7-f912-75cf-86ec-8d03-4ac.ngrok-free.app/api/addBankdetails/',
         requestOptions,
       )
         .then(response => response.text())
@@ -226,7 +227,9 @@ const BankDetails = ({navigation}) => {
           <TouchableOpacity onPress={validate} style={styles.button}>
             <Text style={styles.buttonText}>Save Details</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => authContext.signOut()} style={styles.redbutton}>
+          <TouchableOpacity
+            onPress={() => authContext.signOut()}
+            style={styles.redbutton}>
             <Text style={styles.buttonText}>Sign Out</Text>
           </TouchableOpacity>
         </View>
